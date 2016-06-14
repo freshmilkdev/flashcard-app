@@ -1,5 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { addDeck, showAddDeck, hideAddDeck } from '../actions';
+/*
+* ({decks, addingDeck }) are properties of a state object
+* So we can pass the whole state object if needed (state)
+*
+* Method returns an object - simplified es6 syntax
+* */
+const mapStateToProps = ({decks, addingDeck }) => ({
+    decks: decks, //can be just decks,
+    addingDeck: addingDeck
+});
+
+const mapDispatchToProps = dispatch => ({
+    addDeck: name => dispatch(addDeck(name)),
+    showAddDeck: () => dispatch(showAddDeck()),
+    hideAddDeck: () => dispatch(hideAddDeck())
+});
+
 const Sidebar = React.createClass({
     componentDidUpdate (){
         let el = ReactDOM.findDOMNode(this.refs.add);
@@ -30,4 +49,4 @@ const Sidebar = React.createClass({
     }
 });
 
-export default Sidebar;
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
