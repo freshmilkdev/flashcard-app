@@ -1,0 +1,26 @@
+{
+  "name": "flashcard-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "watchify src/app.js -o public/bundle.js -t [ babelify --presets [ react es2015 ] ]"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freshmilkdev/flashcard-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/freshmilkdev/flashcard-app/issues"
+  },
+  "homepage": "https://github.com/freshmilkdev/flashcard-app#readme",
+  "dependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.3.0",
+    "live-server": "^1.0.0",
+    "watchify": "^3.7.0"
+  }
+}
