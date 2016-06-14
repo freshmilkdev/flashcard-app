@@ -1,27 +1,31 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import * as Redux from 'redux';
+import {addDeck, showAddDeck, hideAddDeck} from './actions';
+import * as reducers from './reducers';
 
-const store = Redux.createStore(function(state, action){
-    switch (action.type){
-        case 'ADD_CARD':
-            let newCard = Object.assign({}, action.data, {
-                score: 1,
-                id: +new Date()
-            });
-            return Object.assign({}, state, {
-                cards: state.cards ? state.cards.concat([newCard]) : [newCard]
-            });
-        default:
-            return state || {};
-    }
-});
+import App from './components/app';
+import Sidebar from './components/sidebar';
+//cards: cards in ES5,
+const store = Redux.createStore(Redux.combineReducers(reducers));
 
-store.subscribe(() => {
-    console.log(store.getState());
-})
+function run(){
+    let state = store.getState();
+    console.log(state);
+    ReactDOM.render(<App>
+            <Sidebar
+                decks={state.decks}
+                addingDeck={state.addingDeck}
+                addDeck={name => store.dispatch(addDeck(name))}
+                showAddDeck={() => store.dispatch(showAddDeck())}
+                hideAddDeck={() => store.dispatch(hideAddDeck())}
+            />
+        </App>
+        , document.getElementById('root'));
+}
 
-store.dispatch({
-    type: 'ADD_CARD',
-    data: {
-        front: 'front',
-        back: 'back'
-    }
-})
+run();
+
+store.subscribe(run);
+
+window.show = () => store.dispatch(showAddDeck());
